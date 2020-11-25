@@ -131,7 +131,7 @@ int main() {
                     if (!str.empty())
                         str.pop_back();
                 } else if (event.key.code == sf::Keyboard::Enter) {
-                } else if (event.key.code == sf::Keyboard::Comma) {
+                } else if (event.key.code == sf::Keyboard::Period) {
                     if (keycode[30] == 0)
                         str.push_back('.');
                     keycode[30] = 1;
@@ -193,7 +193,7 @@ int main() {
                     keycode[26] = 0;
                 } else if (event.key.code == sf::Keyboard::BackSpace) {
                 } else if (event.key.code == sf::Keyboard::Enter) {
-                } else if (event.key.code == sf::Keyboard::Comma) {
+                } else if (event.key.code == sf::Keyboard::Period) {
                     keycode[30] = 0;
                 }
             }
