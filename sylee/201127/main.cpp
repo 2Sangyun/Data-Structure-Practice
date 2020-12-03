@@ -1,46 +1,42 @@
+#include "msmsg.hpp"
 #include <SFML/Graphics.hpp>
-#include <SFML/Graphics/Text.hpp>
+#include <fcntl.h>
 #include <iostream>
 #include <list>
+#include <signal.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <string>
+#include <sys/ipc.h>
+#include <sys/msg.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 using namespace std;
-
-void set_text(int mode, int cursor, string str);
-
-enum mode { SELECT, OPEN, CREATE };
-
-sf::Texture texture;
-sf::Sprite sprite;
-sf::Text text1;
-sf::Text text2;
-sf::Text text3;
-sf::Font font;
+void msg(char *rd, list<char> str);
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(880, 500),"Project Keyboard Warrior");
+    sf::RenderWindow window(sf::VideoMode(880, 250), "SFML works!");
+
+    sf::Texture texture;
+    sf::Sprite sprite;
     texture.loadFromFile("images/Keyboard.jpeg");
     sprite.setTexture(texture);
 
     bool keycode[30] = {
         0,
     };
-    string str;
-    int mode = SELECT;
-    int cursor = 1;
+    list<char> str;
 
-    if (!font.loadFromFile("arial.ttf")) {
-        printf("font error\n");
-    }
-    text1.setFont(font);
-    text1.setCharacterSize(24);
-    text1.setFillColor(sf::Color::Black);
-    text2.setFont(font);
-    text2.setCharacterSize(24);
-    text2.setFillColor(sf::Color::Black);
-    text3.setFont(font);
-    text3.setCharacterSize(24);
-    text3.setFillColor(sf::Color::Black);
-    sprite.setPosition(0, 250);
+    char *pahtName = "./read.txt";
+    char rd[MAX_SIZE + 1] = {};
+    memset(rd, '\0', MAX_SIZE + 1);
+    int fd = open(pahtName, O_RDONLY);
+    int rsize = read(fd, rd, 10);
+    cout << rd << endl;
+    fflush(stdout);
 
     while (window.isOpen()) {
         sf::Event event;
@@ -52,183 +48,159 @@ int main() {
                     keycode[0] = 1;
                     texture.loadFromFile("images/A.jpeg");
                     sprite.setTexture(texture);
-                }
-                else if (event.key.code == sf::Keyboard::B) {
+                    cout << 'a';
+                    fflush(stdout);
+                } else if (event.key.code == sf::Keyboard::B) {
                     if (keycode[1] == 0)
                         str.push_back('B');
                     texture.loadFromFile("images/B.jpeg");
                     sprite.setTexture(texture);
                     keycode[1] = 1;
-                }
-                else if (event.key.code == sf::Keyboard::C) {
+                } else if (event.key.code == sf::Keyboard::C) {
                     if (keycode[2] == 0)
                         str.push_back('C');
                     texture.loadFromFile("images/C.jpeg");
                     sprite.setTexture(texture);
                     keycode[2] = 1;
-                }
-                else if (event.key.code == sf::Keyboard::D) {
+                } else if (event.key.code == sf::Keyboard::D) {
                     if (keycode[3] == 0)
                         str.push_back('D');
                     texture.loadFromFile("images/D.jpeg");
                     sprite.setTexture(texture);
                     keycode[3] = 1;
-                }
-                else if (event.key.code == sf::Keyboard::E) {
+                } else if (event.key.code == sf::Keyboard::E) {
                     if (keycode[4] == 0)
                         str.push_back('E');
                     texture.loadFromFile("images/E.jpeg");
                     sprite.setTexture(texture);
                     keycode[4] = 1;
-                }
-                else if (event.key.code == sf::Keyboard::F) {
+                } else if (event.key.code == sf::Keyboard::F) {
                     if (keycode[5] == 0)
                         str.push_back('F');
                     texture.loadFromFile("images/F.jpeg");
                     sprite.setTexture(texture);
                     keycode[5] = 1;
-                }
-                else if (event.key.code == sf::Keyboard::G) {
+                } else if (event.key.code == sf::Keyboard::G) {
                     if (keycode[6] == 0)
                         str.push_back('G');
                     texture.loadFromFile("images/G.jpeg");
                     sprite.setTexture(texture);
                     keycode[6] = 1;
-                }
-                else if (event.key.code == sf::Keyboard::H) {
+                } else if (event.key.code == sf::Keyboard::H) {
                     if (keycode[7] == 0)
                         str.push_back('H');
                     texture.loadFromFile("images/H.jpeg");
                     sprite.setTexture(texture);
                     keycode[7] = 1;
-                }
-                else if (event.key.code == sf::Keyboard::I) {
+                } else if (event.key.code == sf::Keyboard::I) {
                     if (keycode[8] == 0)
                         str.push_back('I');
                     texture.loadFromFile("images/I.jpeg");
                     sprite.setTexture(texture);
                     keycode[8] = 1;
-                }
-                else if (event.key.code == sf::Keyboard::J) {
+                } else if (event.key.code == sf::Keyboard::J) {
                     if (keycode[9] == 0)
                         str.push_back('J');
                     texture.loadFromFile("images/J.jpeg");
                     sprite.setTexture(texture);
                     keycode[9] = 1;
-                }
-                else if (event.key.code == sf::Keyboard::K) {
+                } else if (event.key.code == sf::Keyboard::K) {
                     if (keycode[10] == 0)
                         str.push_back('K');
                     texture.loadFromFile("images/K.jpeg");
                     sprite.setTexture(texture);
                     keycode[10] = 1;
-                }
-                else if (event.key.code == sf::Keyboard::L) {
+                } else if (event.key.code == sf::Keyboard::L) {
                     if (keycode[11] == 0)
                         str.push_back('L');
                     texture.loadFromFile("images/L.jpeg");
                     sprite.setTexture(texture);
                     keycode[11] = 1;
-                }
-                else if (event.key.code == sf::Keyboard::M) {
+                } else if (event.key.code == sf::Keyboard::M) {
                     if (keycode[12] == 0)
                         str.push_back('M');
                     texture.loadFromFile("images/M.jpeg");
                     sprite.setTexture(texture);
                     keycode[12] = 1;
-                }
-                else if (event.key.code == sf::Keyboard::N) {
+                } else if (event.key.code == sf::Keyboard::N) {
                     if (keycode[13] == 0)
                         str.push_back('N');
                     texture.loadFromFile("images/N.jpeg");
                     sprite.setTexture(texture);
                     keycode[13] = 1;
-                }
-                else if (event.key.code == sf::Keyboard::O) {
+                } else if (event.key.code == sf::Keyboard::O) {
                     if (keycode[14] == 0)
                         str.push_back('O');
                     texture.loadFromFile("images/O.jpeg");
                     sprite.setTexture(texture);
                     keycode[14] = 1;
-                }
-                else if (event.key.code == sf::Keyboard::P) {
+                } else if (event.key.code == sf::Keyboard::P) {
                     if (keycode[15] == 0)
                         str.push_back('P');
                     texture.loadFromFile("images/P.jpeg");
                     sprite.setTexture(texture);
                     keycode[15] = 1;
-                }
-                else if (event.key.code == sf::Keyboard::Q) {
+                } else if (event.key.code == sf::Keyboard::Q) {
                     if (keycode[16] == 0)
                         str.push_back('Q');
                     texture.loadFromFile("images/Q.jpeg");
                     sprite.setTexture(texture);
                     keycode[16] = 1;
-                }
-                else if (event.key.code == sf::Keyboard::R) {
+                } else if (event.key.code == sf::Keyboard::R) {
                     if (keycode[17] == 0)
                         str.push_back('R');
                     texture.loadFromFile("images/R.jpeg");
                     sprite.setTexture(texture);
                     keycode[17] = 1;
-                }
-                else if (event.key.code == sf::Keyboard::S) {
+                } else if (event.key.code == sf::Keyboard::S) {
                     if (keycode[18] == 0)
                         str.push_back('S');
                     texture.loadFromFile("images/S.jpeg");
                     sprite.setTexture(texture);
                     keycode[18] = 1;
-                }
-                else if (event.key.code == sf::Keyboard::T) {
+                } else if (event.key.code == sf::Keyboard::T) {
                     if (keycode[19] == 0)
                         str.push_back('T');
                     texture.loadFromFile("images/T.jpeg");
                     sprite.setTexture(texture);
                     keycode[19] = 1;
-                }
-                else if (event.key.code == sf::Keyboard::U) {
+                } else if (event.key.code == sf::Keyboard::U) {
                     if (keycode[20] == 0)
                         str.push_back('U');
                     texture.loadFromFile("images/U.jpeg");
                     sprite.setTexture(texture);
                     keycode[20] = 1;
-                }
-                else if (event.key.code == sf::Keyboard::V) {
+                } else if (event.key.code == sf::Keyboard::V) {
                     if (keycode[21] == 0)
                         str.push_back('V');
                     texture.loadFromFile("images/V.jpeg");
                     sprite.setTexture(texture);
                     keycode[21] = 1;
-                }
-                else if (event.key.code == sf::Keyboard::W) {
+                } else if (event.key.code == sf::Keyboard::W) {
                     if (keycode[22] == 0)
                         str.push_back('W');
                     texture.loadFromFile("images/W.jpeg");
                     sprite.setTexture(texture);
                     keycode[22] = 1;
-                }
-                else if (event.key.code == sf::Keyboard::X) {
+                } else if (event.key.code == sf::Keyboard::X) {
                     if (keycode[23] == 0)
                         str.push_back('X');
                     texture.loadFromFile("images/X.jpeg");
                     sprite.setTexture(texture);
                     keycode[23] = 1;
-                }
-                else if (event.key.code == sf::Keyboard::Y) {
+                } else if (event.key.code == sf::Keyboard::Y) {
                     if (keycode[24] == 0)
                         str.push_back('Y');
                     texture.loadFromFile("images/Y.jpeg");
                     sprite.setTexture(texture);
                     keycode[24] = 1;
-                }
-                else if (event.key.code == sf::Keyboard::Z) {
+                } else if (event.key.code == sf::Keyboard::Z) {
                     if (keycode[25] == 0)
                         str.push_back('Z');
                     texture.loadFromFile("images/Z.jpeg");
                     sprite.setTexture(texture);
                     keycode[25] = 1;
-                }
-                else if (event.key.code == sf::Keyboard::Space) {
+                } else if (event.key.code == sf::Keyboard::Space) {
                     if (keycode[26] == 0)
                         str.push_back(' ');
                     texture.loadFromFile("images/SPACE.jpeg");
@@ -239,35 +211,21 @@ int main() {
                         str.pop_back();
                     texture.loadFromFile("images/BACKSPACE.jpeg");
                     sprite.setTexture(texture);
-                } else if (event.key.code == sf::Keyboard::Enter) {
-                    switch (mode) {
-                    case SELECT:
-                        if (cursor == 1)
-                            mode = OPEN;
-                        else if (cursor == 2)
-                            mode = CREATE;
-                        break;
-                    }
-                    texture.loadFromFile("images/Enter.jpeg");
-                    sprite.setTexture(texture);
+                } else if (event.key.code == sf::Keyboard::Return) {
+                    // texture.loadFromFile("images/ENTER.jpeg");
+                    // sprite.setTexture(texture);
+                    msg(rd, str);
+                    memset(rd, '\0', MAX_SIZE + 1);
+                    rsize = read(fd, rd, MAX_SIZE);
+                    cout << rd << endl;
+                    fflush(stdout);
+                    break;
                 } else if (event.key.code == sf::Keyboard::Period) {
                     if (keycode[30] == 0)
                         str.push_back('.');
                     texture.loadFromFile("images/PERIOD.jpeg");
                     sprite.setTexture(texture);
                     keycode[30] = 1;
-                } else if (event.key.code == sf::Keyboard::Up) {
-                    switch (mode) {
-                    case SELECT:
-                        cursor = 1;
-                        break;
-                    }
-                } else if (event.key.code == sf::Keyboard::Down) {
-                    switch (mode) {
-                    case SELECT:
-                        cursor = 2;
-                        break;
-                    }
                 }
             } else if (event.type == sf::Event::KeyReleased) {
                 if (event.key.code == sf::Keyboard::A) {
@@ -325,7 +283,7 @@ int main() {
                 } else if (event.key.code == sf::Keyboard::Space) {
                     keycode[26] = 0;
                 } else if (event.key.code == sf::Keyboard::BackSpace) {
-                } else if (event.key.code == sf::Keyboard::Enter) {
+                } else if (event.key.code == sf::Keyboard::Return) {
                 } else if (event.key.code == sf::Keyboard::Period) {
                     keycode[30] = 0;
                 }
@@ -334,41 +292,28 @@ int main() {
             }
         }
 
-        set_text(mode, cursor, str);
-        window.clear(sf::Color::White);
+        window.clear();
         window.draw(sprite);
-        window.draw(text1);
-        window.draw(text2);
         window.display();
     }
     return 0;
 }
 
-void set_text(int mode, int cursor, string str) {
-    switch (mode) {
-    case SELECT:
-        text1.setPosition(400, 40);
-        text1.setString("Open File");
-        text2.setPosition(390, 120);
-        text2.setString("Create File");
-        if (cursor == 1) {
-            text1.setStyle(sf::Text::Underlined);
-            text2.setStyle(sf::Text::Regular);
-        } else if (cursor == 2) {
-            text2.setStyle(sf::Text::Underlined);
-            text1.setStyle(sf::Text::Regular);
-        }
-        break;
+void msg(char *rd, list<char> str) {
+    key_t mykey = ftok("mymsgkey", 1);
+    int msqid = msgget(mykey, IPC_CREAT);
+    int i = 0;
 
-    case OPEN:
-        text1.setStyle(sf::Text::Regular);
-        text1.setPosition(100, 50);
-        text1.setString("This is test text.");
-        text2.setStyle(sf::Text::Regular);
-        text2.setPosition(100, 100);
-        text2.setString(str);
-        break;
-    case CREATE:
-        break;
-    }
+    MsgSnd msgSnd;
+    MsgRslt msgRslt;
+
+    memset(&msgSnd, 0x00, sizeof(MsgSnd));
+    msgSnd.mtype = MSG_TYPE_SEND;
+    strcpy(msgSnd.Text.rd, rd);
+    memcpy(&msgSnd.Text.wr, &str, MAX_SIZE);
+    msgsnd(msqid, &msgSnd, MSG_SIZE_SEND, 0);
+
+    memset(&msgRslt, 0x00, sizeof(MsgRslt));
+    msgrcv(msqid, &msgRslt, MSG_SIZE_RSLT, MSG_TYPE_RSLT, 0);
+    cout << ">>>" << msgRslt.rslt << '%' << endl;
 }
