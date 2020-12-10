@@ -1,21 +1,46 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <iostream>
 #include <list>
 
 using namespace std;
 
-int main() {
-    sf::RenderWindow window(sf::VideoMode(880, 250), "SFML works!");
+void set_text(int mode, int cursor, string str);
 
-    sf::Texture texture;
-    sf::Sprite sprite;
+enum mode { SELECT, OPEN, CREATE };
+
+sf::Texture texture;
+sf::Sprite sprite;
+sf::Text text1;
+sf::Text text2;
+sf::Text text3;
+sf::Font font;
+
+int main() {
+    sf::RenderWindow window(sf::VideoMode(880, 500),"Project Keyboard Warrior");
     texture.loadFromFile("images/Keyboard.jpeg");
     sprite.setTexture(texture);
 
     bool keycode[30] = {
         0,
     };
-    list<char> str;
+    string str;
+    int mode = SELECT;
+    int cursor = 1;
+
+    if (!font.loadFromFile("arial.ttf")) {
+        printf("font error\n");
+    }
+    text1.setFont(font);
+    text1.setCharacterSize(24);
+    text1.setFillColor(sf::Color::Black);
+    text2.setFont(font);
+    text2.setCharacterSize(24);
+    text2.setFillColor(sf::Color::Black);
+    text3.setFont(font);
+    text3.setCharacterSize(24);
+    text3.setFillColor(sf::Color::Black);
+    sprite.setPosition(0, 250);
 
     while (window.isOpen()) {
         sf::Event event;
@@ -215,7 +240,15 @@ int main() {
                     texture.loadFromFile("images/BACKSPACE.jpeg");
                     sprite.setTexture(texture);
                 } else if (event.key.code == sf::Keyboard::Enter) {
-                    texture.loadFromFile("images/ENTER.jpeg");
+                    switch (mode) {
+                    case SELECT:
+                        if (cursor == 1)
+                            mode = OPEN;
+                        else if (cursor == 2)
+                            mode = CREATE;
+                        break;
+                    }
+                    texture.loadFromFile("images/Enter.jpeg");
                     sprite.setTexture(texture);
                 } else if (event.key.code == sf::Keyboard::Period) {
                     if (keycode[30] == 0)
@@ -223,6 +256,18 @@ int main() {
                     texture.loadFromFile("images/PERIOD.jpeg");
                     sprite.setTexture(texture);
                     keycode[30] = 1;
+                } else if (event.key.code == sf::Keyboard::Up) {
+                    switch (mode) {
+                    case SELECT:
+                        cursor = 1;
+                        break;
+                    }
+                } else if (event.key.code == sf::Keyboard::Down) {
+                    switch (mode) {
+                    case SELECT:
+                        cursor = 2;
+                        break;
+                    }
                 }
             } else if (event.type == sf::Event::KeyReleased) {
                 if (event.key.code == sf::Keyboard::A) {
@@ -289,9 +334,41 @@ int main() {
             }
         }
 
-        window.clear();
+        set_text(mode, cursor, str);
+        window.clear(sf::Color::White);
         window.draw(sprite);
+        window.draw(text1);
+        window.draw(text2);
         window.display();
     }
     return 0;
+}
+
+void set_text(int mode, int cursor, string str) {
+    switch (mode) {
+    case SELECT:
+        text1.setPosition(400, 40);
+        text1.setString("Open File");
+        text2.setPosition(390, 120);
+        text2.setString("Create File");
+        if (cursor == 1) {
+            text1.setStyle(sf::Text::Underlined);
+            text2.setStyle(sf::Text::Regular);
+        } else if (cursor == 2) {
+            text2.setStyle(sf::Text::Underlined);
+            text1.setStyle(sf::Text::Regular);
+        }
+        break;
+
+    case OPEN:
+        text1.setStyle(sf::Text::Regular);
+        text1.setPosition(100, 50);
+        text1.setString("This is test text.");
+        text2.setStyle(sf::Text::Regular);
+        text2.setPosition(100, 100);
+        text2.setString(str);
+        break;
+    case CREATE:
+        break;
+    }
 }
