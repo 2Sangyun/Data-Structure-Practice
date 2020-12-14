@@ -1,0 +1,147 @@
+if (event.key.code == sf::Keyboard::A) {
+            if (keycode[0] == 0)
+                str_input.push_back('a');
+            keycode[0] == 1;
+            texture.loadFromFile("images/A.jpeg");
+        } else if (event.key.code == sf::Keyboard::B) {
+            if (keycode[1] == 0)
+                str_input.push_back('b');
+            keycode[1] == 1;
+            texture.loadFromFile("images/B.jpeg");
+        } else if (event.key.code == sf::Keyboard::C) {
+            if (keycode[2] == 0)
+                str_input.push_back('c');
+            keycode[2] == 1;
+            texture.loadFromFile("images/C.jpeg");
+        } else if (event.key.code == sf::Keyboard::D) {
+            if (keycode[3] == 0)
+                str_input.push_back('d');
+            keycode[3] == 1;
+            texture.loadFromFile("images/D.jpeg");
+        } else if (event.key.code == sf::Keyboard::E) {
+           if (keycode[4] == 0)
+                str_input.push_back('e');
+            keycode[4] == 1;
+            texture.loadFromFile("images/E.jpeg");
+        } else if (event.key.code == sf::Keyboard::F) {
+            if (keycode[5] == 0)
+                str_input.push_back('f');
+            keycode[5] == 1;
+            texture.loadFromFile("images/F.jpeg");
+        } else if (event.key.code == sf::Keyboard::G) {
+            if (keycode[6] == 0)
+                str_input.push_back('g');
+            keycode[6] == 1;
+            texture.loadFromFile("images/G.jpeg");
+        } else if (event.key.code == sf::Keyboard::H) {
+            if (keycode[7] == 0)
+                str_input.push_back('h');
+            keycode[7] == 1;
+            texture.loadFromFile("images/H.jpeg");
+        } else if (event.key.code == sf::Keyboard::I) {
+            if (keycode[8] == 0)
+                str_input.push_back('i');
+            keycode[8] == 1;
+            texture.loadFromFile("images/I.jpeg");
+        } else if (event.key.code == sf::Keyboard::J) {
+            if (keycode[9] == 0)
+                str_input.push_back('j');
+            keycode[9] == 1;
+            texture.loadFromFile("images/J.jpeg");
+        } else if (event.key.code == sf::Keyboard::K) {
+            if (keycode[10] == 0)
+                str_input.push_back('k');
+            keycode[10] == 1;
+            texture.loadFromFile("images/K.jpeg");
+        } else if (event.key.code == sf::Keyboard::L) {
+            if (keycode[11] == 0)
+                str_input.push_back('l');
+            keycode[11] == 1;
+            texture.loadFromFile("images/L.jpeg");
+        } else if (event.key.code == sf::Keyboard::M) {
+            if (keycode[12] == 0)
+                str_input.push_back('m');
+            keycode[12] == 1;
+            texture.loadFromFile("images/M.jpeg");
+        } else if (event.key.code == sf::Keyboard::N) {
+            if (keycode[13] == 0)
+                str_input.push_back('n');
+            keycode[13] == 1;
+            texture.loadFromFile("images/N.jpeg");
+        } else if (event.key.code == sf::Keyboard::O) {
+            if (keycode[14] == 0)
+                str_input.push_back('o');
+            keycode[14] == 1;
+            texture.loadFromFile("images/O.jpeg");
+        } else if (event.key.code == sf::Keyboard::P) {
+           if (keycode[15] == 0)
+                str_input.push_back('p');
+            keycode[15] == 1;
+            texture.loadFromFile("images/P.jpeg");
+        } else if (event.key.code == sf::Keyboard::Q) {
+            if (keycode[16] == 0)
+                str_input.push_back('q');
+            keycode[16] == 1;
+            texture.loadFromFile("images/Q.jpeg");
+        } else if (event.key.code == sf::Keyboard::R) {
+            if (keycode[17] == 0)
+                str_input.push_back('r');
+            keycode[17] == 1;
+            texture.loadFromFile("images/R.jpeg");
+        } else if (event.key.code == sf::Keyboard::S) {
+            if (keycode[18] == 0)
+                str_input.push_back('s');
+            keycode[18] == 1;
+            texture.loadFromFile("images/S.jpeg");
+        } else if (event.key.code == sf::Keyboard::T) {
+            if (keycode[19] == 0)
+                str_input.push_back('t');
+            keycode[19] == 1;
+            texture.loadFromFile("images/T.jpeg");
+        } else if (event.key.code == sf::Keyboard::U) {
+            if (keycode[20] == 0)
+                str_input.push_back('u');
+            keycode[20] == 1;
+            texture.loadFromFile("images/U.jpeg");
+        } else if (event.key.code == sf::Keyboard::V) {
+            if (keycode[21] == 0)
+                str_input.push_back('v');
+            keycode[21] == 1;
+            texture.loadFromFile("images/V.jpeg");
+        } else if (event.key.code == sf::Keyboard::W) {
+            if (keycode[22] == 0)
+                str_input.push_back('w');
+            keycode[22] == 1;
+            texture.loadFromFile("images/W.jpeg");
+        } else if (event.key.code == sf::Keyboard::X) {
+            if (keycode[23] == 0)
+                str_input.push_back('x');
+            keycode[23] == 1;
+            texture.loadFromFile("images/X.jpeg");
+        } else if (event.key.code == sf::Keyboard::Y) {
+            if (keycode[24] == 0)
+                str_input.push_back('y');
+            keycode[24] == 1;
+            texture.loadFromFile("images/Y.jpeg");
+        } else if (event.key.code == sf::Keyboard::Z) {
+            if (keycode[25] == 0)
+                str_input.push_back('z');
+            keycode[25] == 1;
+            texture.loadFromFile("images/Z.jpeg");
+        } else if (event.key.code == sf::Keyboard::Space) {
+            if (keycode[26] == 0)
+                str_input.push_back(' ');
+	keycode[26] == 1;
+            texture.loadFromFile("images/SPACE.jpeg");
+        } else if (event.key.code == sf::Keyboard::BackSpace) {
+            if (!str_input.empty())
+                str_input.pop_back();
+            texture.loadFromFile("images/BACKSPACE.jpeg");
+        } else if (event.key.code == sf::Keyboard::Period) {
+            str_input.push_back('.');
+            texture.loadFromFile("images/DOT.jpeg");
+        } else if (event.key.code == sf::Keyboard::Comma) {
+            if (!str_input.empty())
+                str_input.push_back(',');
+            texture.loadFromFile("images/COMMA.jpeg");
+        }
