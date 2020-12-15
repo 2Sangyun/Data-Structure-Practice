@@ -6,7 +6,7 @@ void read_ls(list<string> &ls_list) {
     DIR *dirp;
     struct dirent *dirInfo;
 
-    dirp = opendir("./txt_list");
+    dirp = opendir("./Practices");
     while ((dirInfo = readdir(dirp)) != NULL) {
         if (dirInfo->d_name[0] == '.')
             ;
@@ -103,22 +103,23 @@ void readfile(const char *pathName, string &str1, string &str2, int time) {
 
 void strsnd(string snd1, string snd2) {
     key_t mykey = ftok("mymsgkey", 1);
-    int msqid = msgget(mykey, IPC_CREAT);
+    int msqid = msgget(mykey, 0);
 
-    MsgSnd msgSnd;
-    MsgRslt msgRslt;
+    if (msqid != -1) {
+        MsgSnd msgSnd;
+        MsgRslt msgRslt;
 
-    int i = 0;
-    memset(&msgSnd, 0x00, sizeof(MsgSnd));
-    msgSnd.mtype = MSG_TYPE_CALC;
-    string::iterator it;
-    for (it = snd1.begin(); it != snd1.end(); ++it) {
-        msgSnd.msg1[i++] = *it;
+        int i = 0;
+        memset(&msgSnd, 0x00, sizeof(MsgSnd));
+        msgSnd.mtype = MSG_TYPE_CALC;
+        string::iterator it;
+        for (it = snd1.begin(); it != snd1.end(); ++it) {
+            msgSnd.msg1[i++] = *it;
+        }
+        i = 0;
+        for (it = snd2.begin(); it != snd2.end(); ++it) {
+            msgSnd.msg2[i++] = *it;
+        }
+        msgsnd(msqid, &msgSnd, MSG_SIZE_CALC, 0);
     }
-    i = 0;
-    for (it = snd2.begin(); it != snd2.end(); ++it) {
-        msgSnd.msg2[i++] = *it;
-    }
-
-    msgsnd(msqid, &msgSnd, MSG_SIZE_CALC, 0);
 }
