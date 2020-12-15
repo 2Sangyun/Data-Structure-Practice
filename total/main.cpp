@@ -21,7 +21,6 @@ sf::Sprite sprite;
 sf::Text text1;
 sf::Text text2;
 sf::Text text3;
-sf::Text text4;
 sf::Font font;
 
 string str_full;
@@ -57,17 +56,9 @@ int main() {
     text3.setFont(font);
     text3.setCharacterSize(24);
     text3.setFillColor(sf::Color::Black);
-    text4.setFont(font);
-    text4.setCharacterSize(24);
-    text4.setFillColor(sf::Color::Black);
     sprite.setPosition(0, 250);
 
-    // str_next = "text3";
-    // get_file(filelist);
-    // read_ls(filelist);
-    filelist.push_back("ex1.txt");
-    filelist.push_back("ex2.txt");
-    filelist.push_back("ex3.txt");
+    read_ls(filelist);
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -109,13 +100,15 @@ int main() {
             } else if (mode == RUNNING) {
                 key_input(event, &mode);
                 set_text(cursor, str_cur, str_input, str_next);
-                // msgsnd
             } else if (mode == RESULT) {
+                if (event.type == sf::Event::KeyReleased)
+                    texture.loadFromFile("images/Keyboard.jpeg");
                 set_text(cursor, "Press BackSpace to return.", "", "");
                 if (event.type == sf::Event::KeyPressed) {
                     if (event.key.code == sf::Keyboard::BackSpace) {
                         mode = OPEN;
                         cursor = 0;
+                        texture.loadFromFile("images/BACKSPACE.jpeg");
                     }
                 }
             }
@@ -156,14 +149,15 @@ void set_text(int cursor, string str1, string str2, string str3) {
 
 void key_input(sf::Event event, int *mode) {
     if (event.type == sf::Event::KeyPressed) {
-        if (event.key.code != sf::Keyboard::BackSpace) {
-            if (str_input.length() == str_cur.length() - 1) {
+        if (str_input.length() == str_cur.length() - 1 &&
+            event.key.code != sf::Keyboard::BackSpace) {
+            if (event.key.code == sf::Keyboard::Enter) {
+                texture.loadFromFile("images/Enter.jpeg");
                 str_full.append(str_input);
                 str_fullfile.append(str_cur);
                 str_fullfile.pop_back();
                 if (str_next.empty()) {
                     *mode = RESULT;
-                    texture.loadFromFile("images/Keyboard.jpeg");
                     strsnd(str_full, str_fullfile);
                     return;
                 } else {
@@ -174,8 +168,7 @@ void key_input(sf::Event event, int *mode) {
                     strsnd(str_full, str_fullfile);
                 }
             }
-        }
-        if (event.key.code == sf::Keyboard::A) {
+        } else if (event.key.code == sf::Keyboard::A) {
             if (keycode[0] == 0)
                 str_input.push_back('a');
             keycode[0] == 1;
@@ -318,13 +311,15 @@ void key_input(sf::Event event, int *mode) {
             keycode[27] = 1;
             texture.loadFromFile("images/BACKSPACE.jpeg");
         } else if (event.key.code == sf::Keyboard::Period) {
-            str_input.push_back('.');
+            if (keycode[28] == 0)
+                str_input.push_back('.');
+            keycode[28] == 1;
             texture.loadFromFile("images/PERIOD.jpeg");
         } else if (event.key.code == sf::Keyboard::Comma) {
-            str_input.push_back(',');
+            if (keycode[29] == 0)
+                str_input.push_back(',');
+            keycode[29] == 1;
             texture.loadFromFile("images/COMMA.jpeg");
-        } else if (event.key.code == sf::Keyboard::Enter) {
-            strsnd(str_full, str_fullfile);
         }
     } else if (event.type == sf::Event::KeyReleased) {
         if (event.key.code == sf::Keyboard::A) {
@@ -384,7 +379,9 @@ void key_input(sf::Event event, int *mode) {
         } else if (event.key.code == sf::Keyboard::BackSpace) {
             keycode[27] = 0;
         } else if (event.key.code == sf::Keyboard::Period) {
-            keycode[30] = 0;
+            keycode[28] = 0;
+        } else if (event.key.code == sf::Keyboard::Comma) {
+            keycode[29] = 0;
         }
         texture.loadFromFile("images/Keyboard.jpeg");
     }
@@ -402,7 +399,7 @@ void select_file(sf::Event event, int *mode, int *cursor,
                     itr++;
                 temp = "./Practices/";
                 temp.append(*itr);
-                name = (temp).c_str(); // name = ./Practices/ex1.txt
+                name = (temp).c_str();
                 *cursor = -1;
                 str_full.clear();
                 str_fullfile.clear();
@@ -412,19 +409,23 @@ void select_file(sf::Event event, int *mode, int *cursor,
                 readfile(name, str_cur, str_next, line++);
             }
             keycode[30] = 1;
+            texture.loadFromFile("images/Enter.jpeg");
         } else if (event.key.code == sf::Keyboard::Up) {
-            if (keycode[32] == 0)
+            if (keycode[31] == 0)
                 if (*cursor > 0)
                     *cursor = *cursor - 1;
             keycode[31] = 1;
+            texture.loadFromFile("images/UP.jpeg");
         } else if (event.key.code == sf::Keyboard::Down) {
             if (keycode[32] == 0)
                 if (*cursor < filelist.size() - 1)
                     *cursor = *cursor + 1;
             keycode[32] = 1;
+            texture.loadFromFile("images/DOWN.jpeg");
         }
     }
     if (event.type == sf::Event::KeyReleased) {
+        texture.loadFromFile("images/Keyboard.jpeg");
         if (event.key.code == sf::Keyboard::Enter) {
             keycode[30] = 0;
         } else if (event.key.code == sf::Keyboard::Up) {
