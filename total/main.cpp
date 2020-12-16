@@ -149,13 +149,12 @@ void set_text(int cursor, string str1, string str2, string str3) {
 
 void key_input(sf::Event event, int *mode) {
     if (event.type == sf::Event::KeyPressed) {
-        if (str_input.length() == str_cur.length() - 1 &&
+        if (str_input.length() == str_cur.length() &&
             event.key.code != sf::Keyboard::BackSpace) {
             if (event.key.code == sf::Keyboard::Enter) {
                 texture.loadFromFile("images/Enter.jpeg");
                 str_full.append(str_input);
                 str_fullfile.append(str_cur);
-                str_fullfile.pop_back();
                 if (str_next.empty()) {
                     *mode = RESULT;
                     strsnd(str_full, str_fullfile);
